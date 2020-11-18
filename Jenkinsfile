@@ -7,6 +7,15 @@ pipeline {
        }
      }
 	}
+	 stage('Run Unit Tests') {
+      steps {
+        powershell(script: """ 
+          cd Server
+          dotnet test
+          cd ..
+        """)
+      }
+    }
 	stage('Docker Build') {
       steps {
         powershell(script: 'docker-compose build')     
