@@ -31,7 +31,7 @@ services:
 
     identity:
         container_name: trayanakdimitrova_identity
-        image: 3176a6a/carrentalsystem-identity
+        image: 3176a6a/carrentalsystem-identity:1.0
         build:
             context: ./Server
             dockerfile: ./CarRentalSystem.Identity/Dockerfile
@@ -51,7 +51,7 @@ services:
             
     dealers:
         container_name: trayanakdimitrova_dealers
-        image: 3176a6a/carrentalsystem-dealers
+        image: 3176a6a/carrentalsystem-dealers:1.0
         build:
             context: ./Server
             dockerfile: ./CarRentalSystem.Dealers/Dockerfile
@@ -76,7 +76,7 @@ services:
             
     statistics:
         container_name: trayanakdimitrova_statistics
-        image: 3176a6a/carrentalsystem-statistics
+        image: 3176a6a/carrentalsystem-statistics:1.0
         build:
             context: ./Server
             dockerfile: ./CarRentalSystem.Statistics/Dockerfile
@@ -101,7 +101,7 @@ services:
             
     notifications:
         container_name: trayanakdimitrova_notifications
-        image: 3176a6a/carrentalsystem-notifications
+        image: 3176a6a/carrentalsystem-notifications:1.0
         build:
             context: ./Server
             dockerfile: ./CarRentalSystem.Notifications/Dockerfile
@@ -124,7 +124,7 @@ services:
 
     client:
         container_name: trayanakdimitrova_client
-        image: 3176a6a/carrentalsystem-client
+        image: 3176a6a/carrentalsystem-client:1.0
         build:
             context: ./Client
             dockerfile: ./Dockerfile
@@ -141,7 +141,7 @@ services:
             
     admin:
         container_name: trayanakdimitrova_admin
-        image: 3176a6a/carrentalsystem-admin
+        image: 3176a6a/carrentalsystem-admin:1.0
         build:
             context: ./Server
             dockerfile: ./CarRentalSystem.Admin/Dockerfile
@@ -164,7 +164,7 @@ services:
             
     watchdog:
         container_name: trayanakdimitrova_watchdog
-        image: 3176a6a/carrentalsystem-watchdog
+        image: 3176a6a/carrentalsystem-watchdog:1.0
         build:
             context: ./Server
             dockerfile: ./CarRentalSystem.Watchdog/Dockerfile
