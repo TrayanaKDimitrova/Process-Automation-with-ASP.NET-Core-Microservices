@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messages-rabbitmq
+spec:
+  # serviceName: messages-rabbitmq
+  selector:
+    matchLabels:
+      event-bus: rabbitmq
+  template:
+    metadata:
+      labels:
+        event-bus: rabbitmq
+        system: event-bus
+    spec:
+      terminationGracePeriodSeconds: 60
+      hostname: rabbitmq
+      containers:
+        - name: messages-rabbitmq
+          image: rabbitmq:3-management
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5672
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "300m"
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: "rabbitmquser"
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: environment-secrets
+                  key: rabbitmq-default-pass
+          volumeMounts:
+            - name: messages-rabbitmq-data
+              mountPath: /var/lib/rabbitmq/mnesia
+      volumes:
+        - name: messages-rabbitmq-data
+          persistentVolumeClaim:
+            claimName: messages-rabbitmq-data
