@@ -27,7 +27,10 @@ spec:
               cpu: "300m"
           env:
             - name: RABBITMQ_DEFAULT_USER
-              value: "rabbitmquser"
+              valueFrom:
+                configMapKeyRef:
+                  name: environment-settings
+                  key: rabbitmq-default-user
             - name: RABBITMQ_DEFAULT_PASS
               valueFrom:
                 secretKeyRef:
