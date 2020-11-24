@@ -6,7 +6,7 @@ pipeline {
          echo "$GIT_BRANCH"
        }
      }
-	}
+	
 	 stage('Run Unit Tests') {
       steps {
         powershell(script: """ 
@@ -52,11 +52,12 @@ pipeline {
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'DockerHub') {
             def image = docker.image("3176a6a/carrentalsystem-identity")
-            image.push("1.0.${env.BUILD_ID}")
+            image.push(${env.BUILD_ID})
             image.push('latest')
           }
 		  //Todo: create for all services
         }
       }
     }
+  }
 }
