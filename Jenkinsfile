@@ -37,13 +37,14 @@ pipeline {
         //powershell(script: 'docker volumes prune -f')   		
       }
       post {
-	    success {
-	      echo "Build successfull!"
-        emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
-	    }
-	    failure {
-	      echo "Build failed!"
-	    }
+        success {
+          echo "Build successfull!"
+          emailext body: 'Pipeline Finished: Success', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Car Rental System'
+        }
+        failure {
+          echo "Build failed!"
+          emailext body: 'Pipeline Failed :(', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Car Rental System'
+        }
       }
     }
 	stage('Push Images') {
@@ -56,6 +57,16 @@ pipeline {
             //image.push('latest')
           }
 		  //Todo: create for all services
+        }
+      }
+      post {
+        success {
+          echo "Images pushed!"
+          emailext body: 'Images Pushed', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Car Rental System'
+        }
+        failure {
+          echo "Images push failed!"
+          emailext body: 'Images Push Failed', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Car Rental System'
         }
       }
     }
