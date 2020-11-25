@@ -16,16 +16,16 @@ pipeline {
         """)
       }
     }
-	// stage('Run Test Application') {
-  //     steps {
-  //       powershell(script: 'docker-compose up -d')    
-  //     }
-  //   }
-  //   stage('Run Integration Tests') {
-  //     steps {
-  //       powershell(script: './Tests/ContainerTests.ps1')  //Todo: Here my test files
-  //     }
-  //   }
+	stage('Run Test Application') {
+      steps {
+        powershell(script: 'docker-compose up -d')    
+      }
+    }
+    stage('Run Integration Tests') {
+      steps {
+        powershell(script: './Tests/ContainerTests.ps1')  //Todo: Here my test files
+      }
+    }
 	stage('Stop Test Application') {
       steps {
         powershell(script: 'docker-compose down') 
@@ -40,18 +40,18 @@ pipeline {
 	    }
       }
     }
-	// stage('Push Images') {
-	//   when { branch 'main' }
-  //     steps {
-  //       script {
-  //         docker.withRegistry('https://index.docker.io/v1/', 'DockerHub') {
-  //           def image = docker.image("3176a6a/carrentalsystem-identity")
-  //           image.push(${env.BUILD_ID})
-  //           image.push('latest')
-  //         }
-	// 	  //Todo: create for all services
-  //       }
-  //     }
-  //   }
+	stage('Push Images') {
+	  when { branch 'jenkins-configuration' }
+      steps {
+        script {
+          docker.withRegistry('https://index.docker.io/v1/', 'DockerHub') {
+            def image = docker.image("3176a6a/carrentalsystem-identity")
+            image.push(${env.BUILD_ID})
+            image.push('latest')
+          }
+		  //Todo: create for all services
+        }
+      }
+    }
   }
 }
