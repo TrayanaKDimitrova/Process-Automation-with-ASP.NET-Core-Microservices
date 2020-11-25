@@ -52,11 +52,21 @@ pipeline {
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'MyDockerHubCredentials') {
-            def image = docker.image("3176a6a/carrentalsystem-identity")
-            image.push(env.BUILD_ID)
-            //image.push('latest')
+            def identity = docker.image("3176a6a/carrentalsystem-identity")
+            identity.push(env.BUILD_ID)
+            def dealers = docker.image("3176a6a/carrentalsystem-dealers")
+            dealers.push(env.BUILD_ID)
+            def statistics = docker.image("3176a6a/carrentalsystem-statistics")
+            statistics.push(env.BUILD_ID)
+            def notifications = docker.image("3176a6a/carrentalsystem-notifications")
+            notifications.push(env.BUILD_ID)
+            def client = docker.image("3176a6a/carrentalsystem-client")
+            client.push(env.BUILD_ID)
+            def admin = docker.image("3176a6a/carrentalsystem-admin")
+            admin.push(env.BUILD_ID)
+            def watchdog = docker.image("3176a6a/carrentalsystem-watchdog")
+            watchdog.push(env.BUILD_ID)
           }
-		  //Todo: create for all services
         }
       }
       post {
