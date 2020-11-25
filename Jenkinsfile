@@ -17,8 +17,8 @@ pipeline {
     }
     stage('Docker Build') {
       steps {
-        sh(script: 'docker-compose build')     
-        sh(script: 'docker images -a')
+        powershell(script: 'docker-compose build')     
+        powershell(script: 'docker images -a')
       }
     }
 	stage('Run Test Application') {
