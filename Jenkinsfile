@@ -49,7 +49,7 @@ pipeline {
 	  when { branch 'jenkins-configuration' }
       steps {
         script {
-          docker.withRegistry('https://index.docker.io/v1/', 'DockerHub') {
+          docker.withRegistry('https://index.docker.io/v1/', 'Docker Hub') {
             def image = docker.image("3176a6a/carrentalsystem-identity")
             image.push(${env.BUILD_ID})
             image.push('latest')
