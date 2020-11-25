@@ -9,7 +9,7 @@ pipeline {
 	
 	 stage('Run Unit Tests') {
       steps {
-        sh(script: """ 
+        powershell(script: """ 
           cd Server
           dotnet test
           cd ..
@@ -18,8 +18,8 @@ pipeline {
     }
 	stage('Docker Build') {
       steps {
-        sh(script: 'docker-compose build')     
-        sh(script: 'docker images -a')
+        powershell(script: 'docker-compose build')     
+        powershell(script: 'docker images -a')
       }
     }
 	// stage('Run Test Application') {
