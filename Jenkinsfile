@@ -21,11 +21,11 @@ pipeline {
         powershell(script: 'docker images -a')
       }
     }
-	// stage('Run Test Application') {
-  //     steps {
-  //       powershell(script: 'docker-compose up -d')    
-  //     }
-  //   }
+	 stage('Run Test Application') {
+      steps {
+        powershell(script: 'docker-compose up -d')    
+      }
+    }
   //   stage('Run Integration Tests') {
   //     steps {
   //       powershell(script: './Tests/ContainerTests.ps1')  //Todo: Here my test files
@@ -34,7 +34,7 @@ pipeline {
 	stage('Stop Test Application') {
       steps {
         powershell(script: 'docker-compose down') 
-        powershell(script: 'docker volumes prune -f')   		
+        //powershell(script: 'docker volumes prune -f')   		
       }
       post {
 	    success {
