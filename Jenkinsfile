@@ -5,8 +5,7 @@ pipeline {
        steps {
          echo "$GIT_BRANCH"
        }
-     }
-	
+     }	
 	 stage('Run Unit Tests') {
       steps {
         powershell(script: """ 
@@ -14,6 +13,12 @@ pipeline {
           dotnet test
           cd ..
         """)
+      }
+    }
+    stage('Docker Build') {
+      steps {
+        sh(script: 'docker-compose build')     
+        sh(script: 'docker images -a')
       }
     }
 	stage('Run Test Application') {
