@@ -1,4 +1,4 @@
-$count = 0
+$count = 1
 do {
     $count++
     Write-Output "[$env:STAGE_NAME] Starting container [Attempt: $count]"
@@ -50,6 +50,19 @@ do {
         Start-Sleep -Seconds 1
     }
 	if ($createPage.statuscode -eq '200') {
+        $started = $true
+    } else {
+        Start-Sleep -Seconds 1
+    }
+	$dealersStart = Invoke-WebRequest -Uri http://localhost:5002/dealers/ -UseBasicParsing
+    $notificationsStart = Invoke-WebRequest -Uri http://localhost:5004/notifications -UseBasicParsing
+    
+	if ($dealersStart.statuscode -eq '200') {
+        $started = $true
+    } else {
+        Start-Sleep -Seconds 1
+    }
+	if ($notificationsStart.statuscode -eq '200') {
         $started = $true
     } else {
         Start-Sleep -Seconds 1
