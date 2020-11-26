@@ -26,11 +26,11 @@ pipeline {
         powershell(script: 'docker-compose up -d')    
       }
     }
-  //   stage('Run Integration Tests') {
-  //     steps {
-  //       powershell(script: './Tests/ContainerTests.ps1')  //Todo: Here my test files
-  //     }
-  //   }
+    stage('Run Integration Tests') {
+      steps {
+        powershell(script: './Tests/ContainerTests.ps1')  //Todo: Here my test files
+      }
+    }
 	stage('Stop Test Application') {
       steps {
         powershell(script: 'docker-compose down') 
