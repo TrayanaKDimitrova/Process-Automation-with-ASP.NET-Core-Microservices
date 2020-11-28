@@ -30,12 +30,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: environment-settings
-                  key: rabbitmq-default-user
+                  key: event-bus-user
             - name: RABBITMQ_DEFAULT_PASS
               valueFrom:
                 secretKeyRef:
                   name: environment-secrets
-                  key: rabbitmq-default-pass
+                  key: event-bus-pass
           volumeMounts:
             - name: event-bus-data
               mountPath: /var/lib/rabbitmq/mnesia
