@@ -40,6 +40,13 @@ spec:
         web-service: notifications
         system: server
     spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  web-service: notifications
+              topologyKey: "kubernetes.io/hostname"
       containers:
         - name: notifications-service
           image: 3176a6a/carrentalsystem-notifications:1.0
