@@ -28,7 +28,7 @@ pipeline {
     }
     stage('Run Integration Tests') {
       steps {
-        powershell(script: './Tests/ContainerTests.sh')  //Todo: Here my test files
+        powershell(script: './Tests/ContainerTests.ps1')  //Todo: Here my test files
       }
     }
 	stage('Stop Test Application') {
