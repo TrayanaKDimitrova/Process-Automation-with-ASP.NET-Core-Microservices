@@ -350,3 +350,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+.k8s/.environment/development.yml
+.k8s/.environment/production.yml
