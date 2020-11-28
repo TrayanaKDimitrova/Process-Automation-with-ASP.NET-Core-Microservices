@@ -1,9 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: messages-rabbitmq
+  name: event-bus
 spec:
-  # serviceName: messages-rabbitmq
+  serviceName: event-bus
   selector:
     matchLabels:
       event-bus: rabbitmq
@@ -13,18 +13,18 @@ spec:
         event-bus: rabbitmq
         system: event-bus
     spec:
-      terminationGracePeriodSeconds: 60
-      hostname: rabbitmq
+      # terminationGracePeriodSeconds: 60
+      # hostname: rabbitmq
       containers:
-        - name: messages-rabbitmq
+        - name: event-bus
           image: rabbitmq:3-management
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5672
           resources:
             limits:
-              memory: "500Mi"
-              cpu: "300m"
+              memory: "1Gi"
+              cpu: "500m"
           env:
             - name: RABBITMQ_DEFAULT_USER
               valueFrom:
@@ -37,9 +37,9 @@ spec:
                   name: environment-secrets
                   key: rabbitmq-default-pass
           volumeMounts:
-            - name: messages-rabbitmq-data
+            - name: event-bus-data
               mountPath: /var/lib/rabbitmq/mnesia
       volumes:
-        - name: messages-rabbitmq-data
+        - name: event-bus-data
           persistentVolumeClaim:
-            claimName: messages-rabbitmq-data
+            claimName: event-bus-data

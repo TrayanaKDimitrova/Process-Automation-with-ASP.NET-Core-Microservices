@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: messages-rabbitmq
+  name: event-bus
 spec:
   clusterIP: None
   ports:
