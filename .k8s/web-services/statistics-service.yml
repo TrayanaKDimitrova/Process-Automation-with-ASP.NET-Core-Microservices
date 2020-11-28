@@ -5,7 +5,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-    - ReadOnlyMany
+    - ReadOnlyMany 
   resources:
     requests:
       storage: 10Mi
@@ -78,6 +78,21 @@ spec:
                 secretKeyRef:
                   name: environment-secrets
                   key: statistics-service-cron-jobs-connection-string
+            - name: MessageQueueSettings__Host
+              valueFrom:
+                configMapKeyRef:
+                  name: environment-settings
+                  key: event-bus-host
+            - name: MessageQueueSettings__UserName
+              valueFrom:
+                configMapKeyRef:
+                  name: environment-settings
+                  key: event-bus-user
+            - name: MessageQueueSettings__Password
+              valueFrom:
+                secretKeyRef:
+                  name: environment-secrets
+                  key: event-bus-password
           volumeMounts:
             - name: statistics-service-data
               mountPath: /root/.aspnet/DataProtection-Keys

@@ -40,8 +40,6 @@ spec:
         event-bus: rabbitmq
         system: event-bus
     spec:
-      # terminationGracePeriodSeconds: 60
-      # hostname: rabbitmq
       containers:
         - name: event-bus
           image: rabbitmq:3-management
@@ -62,7 +60,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: environment-secrets
-                  key: event-bus-pass
+                  key: event-bus-password
           volumeMounts:
             - name: event-bus-data
               mountPath: /var/lib/rabbitmq/mnesia
