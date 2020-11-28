@@ -1,20 +1,48 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dealers-service-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 10Mi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dealers-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 5002
+      targetPort: 80
+  selector:
+    web-service: dealers
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: identity-service
+  name: dealers-service
 spec:
   selector:
     matchLabels:
-      web-service: identity
+      web-service: dealers
   template:
     metadata:
       labels:
-        web-service: identity
+        web-service: dealers
         system: server
     spec:
       containers:
-        - name: identity-service
-          image: 3176a6a/carrentalsystem-identity:1.0
+        - name: dealers-service
+          image: 3176a6a/carrentalsystem-dealers:1.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -37,16 +65,16 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: environment-secrets
-                  key: identity-service-connection-string
-            - name: IdentitySettings__AdminPassword
+                  key: dealers-service-connection-string
+            - name: ConnectionStrings__CronJobsConnection
               valueFrom:
                 secretKeyRef:
                   name: environment-secrets
-                  key: admin-password
+                  key: dealers-service-cron-jobs-connection-string
           volumeMounts:
-            - name: identity-service-data
+            - name: dealers-service-data
               mountPath: /root/.aspnet/DataProtection-Keys
       volumes:
-        - name: identity-service-data
+        - name: dealers-service-data
           persistentVolumeClaim:
-            claimName: identity-service-data
+            claimName: dealers-service-data
