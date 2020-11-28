@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: identity-service
+  name: statistics-service
 spec:
   selector:
     matchLabels:
-      web-service: identity
+      web-service: statistics
   template:
     metadata:
       labels:
-        web-service: identity
+        web-service: statistics
         system: server
     spec:
       containers:
-        - name: identity-service
-          image: 3176a6a/carrentalsystem-identity:1.0
+        - name: statistics-service
+          image: 3176a6a/carrentalsystem-statistics:1.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
           resources:
             limits:
-              memory: "512Mi"
+              memory: "500Mi"
               cpu: "250m"
           env:
             - name: ApplicationSettings__Secret
@@ -37,16 +37,16 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: environment-secrets
-                  key: identity-service-connection-string
-            - name: IdentitySettings__AdminPassword
+                  key: statistics-service-connection-string
+            - name: ConnectionStrings__CronJobsConnection
               valueFrom:
                 secretKeyRef:
                   name: environment-secrets
-                  key: admin-password
+                  key: statistics-service-cron-jobs-connection-string
           volumeMounts:
-            - name: identity-service-data
+            - name: statistics-service-data
               mountPath: /root/.aspnet/DataProtection-Keys
       volumes:
-        - name: identity-service-data
+        - name: statistics-service-data
           persistentVolumeClaim:
-            claimName: identity-service-data
+            claimName: statistics-service-data
