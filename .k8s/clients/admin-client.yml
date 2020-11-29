@@ -70,9 +70,9 @@ spec:
                 configMapKeyRef:
                   name: environment-settings
                   key: admin-statistics-endpoint
-        volumeMounts:
-          - name: admin-client-data
-            mountPath: /root/.aspnet/DataProtection-Keys
+          volumeMounts:
+            - name: admin-client-data
+              mountPath: /root/.aspnet/DataProtection-Keys
       volumes:
         - name: admin-client-data
           persistentVolumeClaim:
