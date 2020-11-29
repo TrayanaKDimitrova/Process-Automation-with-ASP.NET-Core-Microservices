@@ -21,6 +21,12 @@ pipeline {
         powershell(script: 'docker images -a')
       }
     }
+    stage ('Build Dev image') {
+      when { branch 'jenkins-configuration' }
+	      steps {
+	       powershell(script: 'docker build -t 3176a6a/carrentalsystem-client-development:latest --build-arg configuration=development ./Client')    
+	      }
+    }
 	 stage('Run Test Application') {
       steps {
         powershell(script: 'docker-compose up -d')    
