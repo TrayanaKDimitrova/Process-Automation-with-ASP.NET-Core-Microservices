@@ -48,7 +48,7 @@ pipeline {
       }
     }
 	stage('Push Images') {
-	  when { branch 'jenkins-configuration' }
+	  when { branch 'main' }
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'MyDockerHubCredentials') {
